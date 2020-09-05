@@ -28,9 +28,13 @@ class Checkout:
 
     def total(self):
         """Get the total cost for the cart"""
-        cost = 0
-        for item in self.items:
-            cost += item.price
+
+        # Copy the items because pricing rules can modify the items
+        items = self.items
+        for sku in self.skus:
+            items = self.pricing_rules.apply_rule(sku, items)
+
+        cost = sum([item.price for item in items])
         return cost
 
 
