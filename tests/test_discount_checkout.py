@@ -65,3 +65,20 @@ class CheckoutDiscountTestCase(unittest.TestCase):
         # asserts items are equal not just the count. It's a misleading assertion name
         self.assertCountEqual(['mbp', 'vga', 'mbp', 'vga'], item_skus)
 
+    def test_example_scenario_one(self):
+        """**Scenario** 3 atv and a vga cable for 249.00"""
+        checkout = self.create_checkout(['atv', 'atv', 'atv', 'vga'])
+        total = checkout.total()
+        self.assertEqual(total, 249.00)
+
+    def test_example_scenario_two(self):
+        """**Scenario** atv, ipd, ipd, atv, ipd, ipd, ipd Total expected: $2718.95"""
+        checkout = self.create_checkout(['atv', 'ipd', 'ipd', 'atv', 'ipd', 'ipd', 'ipd'])
+        total = checkout.total()
+        self.assertEqual(total, 2718.95)
+
+    def test_example_scenario_three(self):
+        """**Scenario** mbp, vga, ipd Total expected: $1949.98"""
+        checkout = self.create_checkout(['mbp', 'vga', 'ipd'])
+        total = checkout.total()
+        self.assertEqual(total, 1949.98)
