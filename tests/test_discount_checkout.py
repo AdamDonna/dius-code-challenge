@@ -55,3 +55,13 @@ class CheckoutDiscountTestCase(unittest.TestCase):
         item_skus = [item.sku for item in checkout.items]
         # asserts items are equal not just the count. It's a misleading assertion name
         self.assertCountEqual(['mbp', 'vga'], item_skus)
+
+    def test_free_product_applied_for_every_macbook(self):
+        """**Scenario** User buys a mac book pro and gets a free vga adapter"""
+        checkout = self.create_checkout(['mbp', 'mbp'])
+        total = checkout.total()
+        self.assertEqual(total, 2799.98)
+        item_skus = [item.sku for item in checkout.items]
+        # asserts items are equal not just the count. It's a misleading assertion name
+        self.assertCountEqual(['mbp', 'vga', 'mbp', 'vga'], item_skus)
+

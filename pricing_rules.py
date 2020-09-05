@@ -6,10 +6,9 @@ class PricingRules:
 
     def apply_rule(self, sku, items):
         mapping = {
-            MacbookPro.sku : self.free_item_discount,
+            MacbookPro.sku: self.free_item_discount,
             SuperIpad.sku: self.bulk_discount_price,
             AppleTV.sku: self.discount_pricing_rule,
-            # VGAadapter.sku: None
         }
         rule = mapping.get(sku, lambda items: items)
         return rule(items)
@@ -28,6 +27,10 @@ class PricingRules:
 
     def free_item_discount(self, items):
         """
-        Eg:// get a free item when a different item is purchased
+        Get a free item when a different item is purchased
+        Specifically implemented for the macbook pro getting a free VGA adapter
         """
+        for item in items:
+            if item.sku == MacbookPro.sku:
+                items.append(CheckoutItem(sku=VGAadapter.sku, price=0))
         return items
