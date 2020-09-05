@@ -1,3 +1,4 @@
+import collections
 from product import MacbookPro, SuperIpad, AppleTV, VGAadapter
 from checkout import CheckoutItem
 
@@ -22,7 +23,15 @@ class PricingRules:
     def bulk_discount_price(self, items):
         """
         Eg:// price drops when there are more than x in the cart
+        Specifically implemented for the scenario where a user buys more than 4 Superipads and gets a discount
         """
+        occurrences = collections.Counter(item.sku for item in items)
+        # If we add the ability to remove items this will need to be updated
+        if occurrences.get(SuperIpad.sku, 0) > 4:
+            for item in items:
+                if item.sku == SuperIpad.sku:
+                    item.price = 499.99
+
         return items
 
     def free_item_discount(self, items):
