@@ -12,14 +12,14 @@ class Checkout:
         Items keeps a track of the items in the cart.
         """
         self.items = []
-        self.skus = {}
+        self.skus = set()
         self.pricing_rules = pricing_rules
 
     def scan(self, sku):
         """"""
         product = BaseProduct.get_catalog_product(sku)
         if not product:
-            raise
+            raise ProductDoesntExist
         self.skus.add(sku)
         self.items.append(
             CheckoutItem(sku=sku, price=product.price)
