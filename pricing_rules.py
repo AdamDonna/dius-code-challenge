@@ -23,13 +23,13 @@ class PricingRules:
         """
         Eg:// Buy 3 pay for the price of 2
         Specifically implemented for a user buying 3 but paying for 2 apple tvs
-        # TODO: Make this work for mutliples of 3
         """
         occurrences = collections.Counter(item.sku for item in items)
         # If we add the ability to remove items this will need to be updated to revert pricing
-        if occurrences.get(AppleTV.sku, 0) >= 3:
+        num_free = occurrences.get(AppleTV.sku, 0) // 3
+        for free in range(num_free):
             for item in items:
-                if item.sku == AppleTV.sku:
+                if item.sku == AppleTV.sku and item.price != 0:
                     item.price = 0
                     break
 

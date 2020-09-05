@@ -82,3 +82,15 @@ class CheckoutDiscountTestCase(unittest.TestCase):
         checkout = self.create_checkout(['mbp', 'vga', 'ipd'])
         total = checkout.total()
         self.assertEqual(total, 1949.98)
+
+    def test_discount_pricing_multiples_of_three(self):
+        """**Scenario** User buys 6 apple tvs but only pays for 4"""
+        checkout = self.create_checkout(['atv', 'atv', 'atv', 'atv', 'atv', 'atv'])
+        total = checkout.total()
+        self.assertEqual(total, 438)
+
+    def test_discount_pricing_multiples_of_three_offset(self):
+        """**Scenario** User buys 5 apple tvs but only pays for 4"""
+        checkout = self.create_checkout(['atv', 'atv', 'atv', 'atv', 'atv'])
+        total = checkout.total()
+        self.assertEqual(total, 438)
