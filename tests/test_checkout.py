@@ -24,3 +24,8 @@ class CheckoutDiscountTestCase(unittest.TestCase):
         with self.assertRaises(ProductDoesntExist):
             checkout.scan('long-sku')
 
+    def test_works_on_empty(self):
+        """**Scenario** Works for an empty cart"""
+        checkout = Checkout()
+        total = checkout.total()
+        self.assertEqual(total, 0)
