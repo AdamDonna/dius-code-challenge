@@ -46,6 +46,12 @@ pipenv shell
 pipenv run python -m unittest
 ```
 
+Coverage can be determined with
+```bash
+pipenv run coverage report
+```
+It should be 100% coverage with the exclusion of the the virtualenv
+
 
 ### Notes
 - Took about 3.5 hours because my original design wasn't meeting the interface requirements
